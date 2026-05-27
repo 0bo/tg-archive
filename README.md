@@ -82,6 +82,7 @@ Then open http://localhost:8000
 
 - Run commands from this repository root in PowerShell or CMD.
 - `./workspace` is bind-mounted into the container as `/workspace`, so `config.yaml`, `data.sqlite`, `session.session`, `media`, `site`, and other archive files persist on your Windows filesystem.
+- The compose file includes `UID/GID` mapping mainly for Linux file-permission convenience; Docker Desktop on Windows can use it as-is.
 - To use a different site directory, set `TG_ARCHIVE_SITE_DIR` (for example `/workspace/my-other-site`) when running compose commands.
 
 ### Usage
