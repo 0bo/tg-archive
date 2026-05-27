@@ -14,6 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 RUN pip install --no-cache-dir .
+RUN chmod +x /app/docker-entrypoint.sh
 
 RUN mkdir -p /workspace
 WORKDIR /workspace

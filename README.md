@@ -32,7 +32,7 @@ tg-archive uses the [Telethon](https://github.com/LonamiWebs/Telethon) Telegram 
 
 - Install with: `uv pip install tg-archive` (tested with Python 3.13.2).
 
-## Docker (Windows Docker Desktop friendly)
+## Docker (including Windows Docker Desktop)
 
 This repository includes a Docker setup that keeps all runtime files on the host, so deleting/recreating containers does not lose your data.
 
