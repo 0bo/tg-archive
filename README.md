@@ -32,6 +32,59 @@ tg-archive uses the [Telethon](https://github.com/LonamiWebs/Telethon) Telegram 
 
 - Install with: `uv pip install tg-archive` (tested with Python 3.13.2).
 
+## Docker (including Windows Docker Desktop)
+
+This repository includes a Docker setup that keeps all runtime files on the host, so deleting/recreating containers does not lose your data.
+
+### 1) Build the image
+
+```bash
+docker compose build
+```
+
+### 2) Initialize a new archive workspace
+
+```bash
+docker compose run --rm tg-archive init
+```
+
+This creates `./workspace/mysite` on your host (default) with `config.yaml`, templates, and static files.
+
+### 3) Configure Telegram credentials
+
+Edit `./workspace/mysite/config.yaml` and set `api_id` / `api_hash` / `group`.
+
+Or set environment variables in PowerShell before running commands:
+
+```powershell
+$env:API_ID="123456"
+$env:API_HASH="your_api_hash"
+```
+
+### 4) Sync and build
+
+```bash
+docker compose run --rm tg-archive sync
+docker compose run --rm tg-archive build
+```
+
+On first sync, Telegram login is interactive (phone number + auth code), and `session.session` will be written under `./workspace/mysite`.
+
+### 5) Preview generated static site (optional)
+
+```bash
+docker compose --profile preview up preview
+```
+
+Then open http://localhost:8000
+
+### Notes for Windows users
+
+- Run commands from this repository root in PowerShell or CMD.
+- `./workspace` is bind-mounted into the container as `/workspace`, so `config.yaml`, `data.sqlite`, `session.session`, `media`, `site`, and other archive files persist on your Windows filesystem.
+- The compose file includes `UID/GID` mapping mainly for Linux file-permission convenience; Docker Desktop on Windows can use it as-is.
+- To use a different site directory, set `TG_ARCHIVE_SITE_DIR` (for example `/workspace/my-other-site`) when running compose commands.
+
 ### Usage
 
 1. `tg-archive --new --path=mysite` (creates a new site. `cd` into mysite and edit `config.yaml`).
