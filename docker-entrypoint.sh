@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 set -eu
 
 SITE_DIR="${TG_ARCHIVE_SITE_DIR:-/workspace/mysite}"
@@ -44,8 +44,8 @@ case "${1:-help}" in
     cat <<EOF
 Usage:
   docker compose run --rm tg-archive init [path]
-  docker compose run --rm tg-archive sync
-  docker compose run --rm tg-archive build
+  docker compose run --rm tg-archive sync [extra tg-archive flags]
+  docker compose run --rm tg-archive build [extra tg-archive flags]
   docker compose run --rm tg-archive [tg-archive args]
 
 Default site dir: $SITE_DIR
