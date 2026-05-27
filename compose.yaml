@@ -1,0 +1,25 @@
+services:
+  tg-archive:
+    build: .
+    image: tg-archive:local
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    environment:
+      API_ID: ${API_ID:-}
+      API_HASH: ${API_HASH:-}
+      TG_ARCHIVE_SITE_DIR: ${TG_ARCHIVE_SITE_DIR:-/workspace/mysite}
+    volumes:
+      - ./workspace:/workspace
+
+  preview:
+    image: python:3.12-slim
+    profiles: ["preview"]
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /workspace
+    command: python -m http.server 8000 --directory ${TG_ARCHIVE_SITE_DIR:-/workspace/mysite}/site
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./workspace:/workspace
